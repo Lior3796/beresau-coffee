@@ -8,7 +8,7 @@ const Hero = () => {
         </div>
         <div>
           <button className="bg-transparent border border-white text-white py-2.5 px-6 rounded-xl text-lg font-medium hover:bg-white hover:text-brand-dark transition-colors">
-            צרו קשר
+            צור קשר
           </button>
         </div>
       </div>

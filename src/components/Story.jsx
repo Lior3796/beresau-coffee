@@ -6,7 +6,7 @@ const Story = () => {
 
           <div className="flex-1 flex items-center">
             <div className="flex flex-col items-center md:items-end text-center md:text-right">
-              <h2 className=" w-full text-5xl mb-6 font-varela leading-tight tracking-tighter text-brand-dark">
+              <h2 className=" w-full text-5xl mb-6 font-varela leading-tight tracking-tight text-brand-dark">
                 "אם אשכח אותו"<br /><br />
                 הסיפור של אברהם אובגן ז"ל
               </h2>
@@ -19,7 +19,7 @@ const Story = () => {
             <img 
               src="/images/Avraham.jpeg" 
               alt="קפה ברסאו" 
-              className="w-full h-full object-cover bg-center rounded-[40px] shadow-md"
+              className="w-full h-full object-cover rounded-[40px] shadow-md"
             />
           </div>
         </div>

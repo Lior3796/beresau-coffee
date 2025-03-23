@@ -37,7 +37,7 @@ const Footer = () => {
         <div className="flex flex-col">
           <hr className="border-brand-dark/15 mb-8" />
           <div className="flex justify-center">
-            <p className="text-base text-brand-dark">© כל הזכויות שמורות לקפה ברסאו 2025 | עוצב ופותח ע"י Solid Software</p>
+            <p className="text-base text-brand-dark">© כל הזכויות שמורות לקפה ברסאו 2025 | עוצב ופותח ע"י <a href="https://www.solid-software.solutions/">Solid Software</a></p>
           </div>
         </div>
       </div>
