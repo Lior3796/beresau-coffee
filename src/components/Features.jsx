@@ -3,6 +3,15 @@ const Features = () => {
     <section className="py-28 bg-brand-brown">
       <div className="container">
         <div className="flex flex-col md:flex-row gap-20">
+
+        <div className="flex-1">
+            <img 
+              src="/images/derese-coffee.jpeg" 
+              alt="קפה ברסאו" 
+              className="w-full h-full object-cover rounded-[40px] shadow-md"
+            />
+          </div>
+
           <div className="flex-1 flex flex-col justify-between items-start">
             <div className="text-right mb-8">
               <h2 className="text-5xl mb-6 font-varela leading-tight tracking-tight text-white">למה לבחור בברסאו לעסק שלך</h2>
@@ -25,14 +34,8 @@ const Features = () => {
               </button>
             </div>
           </div>
+         
           
-          <div className="flex-1">
-            <img 
-              src="/images/derese-coffee.jpeg" 
-              alt="קפה ברסאו" 
-              className="w-full h-full object-cover rounded-[40px] shadow-md"
-            />
-          </div>
         </div>
       </div>
     </section>
