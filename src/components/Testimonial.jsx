@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { motion } from "framer-motion";
 
 const Testimonial = () => {
   const testimonials = [
@@ -21,6 +22,30 @@ const Testimonial = () => {
   ]
 
   const [currentIndex, setCurrentIndex] = useState(0)
+  const sectionRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,18 +57,96 @@ const Testimonial = () => {
     return () => clearInterval(interval)
   }, [])
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        staggerChildren: 0.4
+      }
+    }
+  };
+
+  const titleVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const carouselVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.7,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const testimonialVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15,
+        duration: 0.6
+      }
+    },
+    exit: {
+      opacity: 0,
+      x: -50,
+      transition: {
+        duration: 0.4
+      }
+    }
+  };
+
   return (
-    <section className="py-28 bg-brand-light shadow-md">
-      <div className="container">
+    <section ref={sectionRef} className="py-28 bg-brand-light shadow-md">
+      <motion.div 
+        className="container"
+        initial="hidden"
+        animate={isVisible ? "visible" : "hidden"}
+        variants={containerVariants}
+      >
         <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
-          <h1 className="text-4xl font-bold mb-12 text-brand-dark font-varela">לקוחות ממליצים</h1>
-          <div className="relative h-48 w-full overflow-hidden">
+          <motion.h1 
+            className="text-4xl font-bold mb-12 text-brand-dark font-varela"
+            variants={titleVariants}
+          >
+            לקוחות ממליצים
+          </motion.h1>
+          <motion.div 
+            className="relative h-48 w-full overflow-hidden"
+            variants={carouselVariants}
+          >
             {testimonials.map((testimonial, index) => (
-              <div 
+              <motion.div 
                 key={index}
-                className={`absolute top-0 left-0 w-full transition-opacity duration-1000 ${
+                className={`absolute top-0 left-0 w-full ${
                   index === currentIndex ? 'opacity-100' : 'opacity-0'
                 }`}
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ 
+                  opacity: index === currentIndex ? 1 : 0,
+                  x: index === currentIndex ? 0 : 50,
+                  transition: {
+                    opacity: { duration: 0.5 },
+                    x: { type: "spring", stiffness: 100, damping: 15 }
+                  }
+                }}
               >
                 <p className="text-3xl mb-8 font-varela leading-relaxed text-brand-dark">
                   "{testimonial.quote}"
@@ -54,24 +157,29 @@ const Testimonial = () => {
                     <p className="font-semibold text-lg text-brand-dark">{testimonial.name} </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
           
-          <div className="flex mt-8 space-x-2">
+          <motion.div 
+            className="flex mt-8 space-x-2"
+            variants={carouselVariants}
+          >
             {testimonials.map((_, index) => (
-              <button
+              <motion.button
                 key={index}
                 className={`w-3 h-3 rounded-full mx-1 ${
                   index === currentIndex ? 'bg-brand-dark' : 'bg-gray-300'
                 }`}
                 onClick={() => setCurrentIndex(index)}
                 aria-label={`Go to testimonial ${index + 1}`}
+                whileHover={{ scale: 1.2 }}
+                whileTap={{ scale: 0.9 }}
               />
             ))}
-          </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
