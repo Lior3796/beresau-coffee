@@ -2,8 +2,42 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 const Contact = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
   const sectionRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // emails
+    const serviceId = "service_8ons78m";
+    const templateId = "template_8awoubc";
+    const publicKey = "user_F2sOkbXU6MFel9pj45ENo";
+
+    //new object
+
+    const templateParams = {
+      name: name,
+      email: email,
+      phone: phone,
+      message: message,
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then((response) => {
+        console.log("Email sent successfully!", response);
+        setName("");
+        setPhone("");
+        setEmail("");
+        setMessage("");
+      })
+      .catch((error) => {
+        console.log("Error sending email", error);
+      });
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -130,7 +164,9 @@ const Contact = () => {
               <label htmlFor="name" className="block text-lg text-brand-dark text-right mb-2">שם מלא</label>
               <motion.input 
                 type="text" 
-                id="name" 
+                id="name"
+                name="name" 
+                onChange={(e) => setName(e.target.value)}
                 className="w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 focus:ring-brand-brown"
                 whileFocus="focus"
                 variants={inputVariants}
@@ -144,7 +180,9 @@ const Contact = () => {
               <label htmlFor="phone" className="block text-lg text-brand-dark text-right mb-2">פלאפון</label>
               <motion.input 
                 type="tel" 
-                id="phone" 
+                id="phone"
+                name="phone"
+                onChange={(e) => setPhone(e.target.value)} 
                 className="w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 focus:ring-brand-brown"
                 whileFocus="focus"
                 variants={inputVariants}
@@ -158,7 +196,9 @@ const Contact = () => {
               <label htmlFor="email" className="block text-lg text-brand-dark text-right mb-2">אימייל</label>
               <motion.input 
                 type="email" 
-                id="email" 
+                id="email"
+                                name="phone"
+                onChange={(e) => setPhone(e.target.value)} 
                 className="w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 focus:ring-brand-brown"
                 whileFocus="focus"
                 variants={inputVariants}
