@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import.meta.env;
 
 const Contact = () => {
   const [name, setName] = useState("");
@@ -10,9 +11,9 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // emails
-    const serviceId = "service_8ons78m";
-    const templateId = "template_8awoubc";
-    const publicKey = "user_F2sOkbXU6MFel9pj45ENo";
+    const serviceId = import.meta.env.VITE_SERVICE_ID;
+    const templateId = import.meta.env.VITE_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_PUBLIC_KEY;
 
     //new object
 
