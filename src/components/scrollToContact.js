@@ -1,4 +1,4 @@
-export  const scrollToContact = (e) => {
+export const scrollToContact = (e) => {
     e.preventDefault();
-    document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+    document.getElementById("contact").scrollIntoView({ behavior: "smooth", });
   };

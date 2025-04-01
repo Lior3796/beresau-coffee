@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
+import { scrollToContact } from "./scrollToContact";
 const Hero = () => {
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -89,6 +89,7 @@ const Hero = () => {
             className="bg-transparent border border-white text-white py-2.5 px-6 rounded-xl text-lg font-medium transition-colors"
             variants={buttonVariants}
             whileHover="hover"
+            onClick={scrollToContact}
           >
             צור קשר
           </motion.button>

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-
+import emailjs from "@emailjs/browser";
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -137,8 +137,9 @@ const Contact = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-28 bg-white">
-      <motion.div 
+    <section ref={sectionRef} className="py-28 bg-white" onSubmit={handleSubmit}>
+      <motion.div
+        id="contact" 
         className="container"
         initial="hidden"
         animate={isVisible ? "visible" : "hidden"}
@@ -197,8 +198,8 @@ const Contact = () => {
               <motion.input 
                 type="email" 
                 id="email"
-                                name="phone"
-                onChange={(e) => setPhone(e.target.value)} 
+                name="email"
+                onChange={(e) => setEmail(e.target.value)} 
                 className="w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 focus:ring-brand-brown"
                 whileFocus="focus"
                 variants={inputVariants}
@@ -217,6 +218,8 @@ const Contact = () => {
                 className="w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 focus:ring-brand-brown"
                 whileFocus="focus"
                 variants={inputVariants}
+                name="message"
+                onChange={(e) => setMessage(e.target.value)}
               ></motion.textarea>
             </motion.div>
             

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { scrollToContact } from "./scrollToContact";
 
 const Features = () => {
   const sectionRef = useRef(null);
@@ -166,6 +167,7 @@ const Features = () => {
                 className="bg-white/15 text-white py-2.5 px-6 rounded-xl text-lg font-medium transition-colors"
                 variants={buttonVariants}
                 whileHover="hover"
+                onClick={scrollToContact}
               >
                 צור קשר להזמנה
               </motion.button>
