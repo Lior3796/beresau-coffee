@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import.meta.env;
 import { Element } from "react-scroll";
 
 const Contact = () => {
@@ -218,19 +217,19 @@ const Contact = () => {
 
   return (
     <Element name="contact">
-      <section ref={sectionRef} id="contact" className="py-28 bg-white">
+      <section ref={sectionRef} id="contact" className="py-16 md:py-28 bg-white">
         <motion.div
-          className="container"
+          className="container mx-auto px-4 md:px-16"
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
           variants={containerVariants}
         >
           <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
-            <motion.div className="mb-12" variants={titleVariants}>
-              <h2 className="text-5xl mb-6 font-varela leading-tight tracking-tighter text-brand-dark">
+            <motion.div className="mb-8 md:mb-12" variants={titleVariants}>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl mb-4 md:mb-6 font-varela leading-tight tracking-tighter text-brand-dark">
                 יצירת קשר
               </h2>
-              <p className="text-xl text-brand-dark">
+              <p className="text-base sm:text-lg md:text-xl text-brand-dark">
                 {" "}
                 השאירו פרטים ונחזור אליכם 📩
               </p>
@@ -238,14 +237,14 @@ const Contact = () => {
 
             <motion.form
               onSubmit={handleSubmit}
-              className="w-full max-w-lg"
+              className="w-full max-w-lg px-4 sm:px-0"
               variants={formVariants}
               noValidate
             >
-              <motion.div className="mb-6" variants={inputVariants}>
+              <motion.div className="mb-4 md:mb-6" variants={inputVariants}>
                 <label
                   htmlFor="name"
-                  className="block text-lg text-brand-dark text-right mb-2"
+                  className="block text-base md:text-lg text-brand-dark text-right mb-2"
                 >
                   שם מלא *
                 </label>
@@ -257,7 +256,7 @@ const Contact = () => {
                   id="name"
                   required
                   minLength="2"
-                  className={`w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
+                  className={`w-full p-2 md:p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
                     errors.name ? "border-2 border-red-500 focus:ring-red-500" : "focus:ring-brand-brown"
                   }`}
                   whileFocus="focus"
@@ -269,10 +268,10 @@ const Contact = () => {
                 )}
               </motion.div>
 
-              <motion.div className="mb-6" variants={inputVariants}>
+              <motion.div className="mb-4 md:mb-6" variants={inputVariants}>
                 <label
                   htmlFor="phone"
-                  className="block text-lg text-brand-dark text-right mb-2"
+                  className="block text-base md:text-lg text-brand-dark text-right mb-2"
                 >
                   פלאפון *
                 </label>
@@ -284,7 +283,7 @@ const Contact = () => {
                   id="phone"
                   required
                   pattern="^0(5\d|[2-4]\d|[8-9]\d)-?\d{7}$"
-                  className={`w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
+                  className={`w-full p-2 md:p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
                     errors.phone ? "border-2 border-red-500 focus:ring-red-500" : "focus:ring-brand-brown"
                   }`}
                   whileFocus="focus"
@@ -297,10 +296,10 @@ const Contact = () => {
                 )}
               </motion.div>
 
-              <motion.div className="mb-6" variants={inputVariants}>
+              <motion.div className="mb-4 md:mb-6" variants={inputVariants}>
                 <label
                   htmlFor="email"
-                  className="block text-lg text-brand-dark text-right mb-2"
+                  className="block text-base md:text-lg text-brand-dark text-right mb-2"
                 >
                   אימייל *
                 </label>
@@ -311,7 +310,7 @@ const Contact = () => {
                   type="email"
                   id="email"
                   required
-                  className={`w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
+                  className={`w-full p-2 md:p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
                     errors.email ? "border-2 border-red-500 focus:ring-red-500" : "focus:ring-brand-brown"
                   }`}
                   whileFocus="focus"
@@ -327,7 +326,7 @@ const Contact = () => {
               <motion.div className="mb-6" variants={inputVariants}>
                 <label
                   htmlFor="message"
-                  className="block text-lg text-brand-dark text-right mb-2"
+                  className="block text-base md:text-lg text-brand-dark text-right mb-2"
                 >
                   הודעה *
                 </label>
@@ -340,7 +339,7 @@ const Contact = () => {
                   required
                   minLength="10"
                   placeholder="אני מעוניין ב.."
-                  className={`w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
+                  className={`w-full p-2 md:p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
                     errors.message ? "border-2 border-red-500 focus:ring-red-500" : "focus:ring-brand-brown"
                   }`}
                   whileFocus="focus"
@@ -352,15 +351,17 @@ const Contact = () => {
                 )}
               </motion.div>
 
-              <motion.button
-                type="submit"
-                className="bg-brand-brown text-white py-2.5 px-6 rounded-xl text-lg font-medium transition-colors"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
-              >
-                שלח
-              </motion.button>
+              <div className="flex justify-center sm:justify-start">
+                <motion.button
+                  type="submit"
+                  className="bg-brand-brown text-white py-2 px-5 sm:py-2.5 sm:px-6 rounded-xl text-base sm:text-lg font-medium transition-colors"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  שלח
+                </motion.button>
+              </div>
             </motion.form>
           </div>
         </motion.div>

@@ -76,7 +76,7 @@ const Hero = () => {
             className="text-7xl mb-6 font-varela leading-tight tracking-tighter"
             variants={titleVariants}
           >
-            ברסאו – קפה אתיופי משובח
+            ברסאו קפה אתיופי משובח
           </motion.h1>
           <motion.p 
             className="text-xl"

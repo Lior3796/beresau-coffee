@@ -56,7 +56,7 @@ const Testimonial = () => {
     }, 5000) // Change every 5 seconds
 
     return () => clearInterval(interval)
-  }, [])
+  }, [testimonials.length])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -116,22 +116,22 @@ const Testimonial = () => {
 
   return (
     <Element name="testimonial">
-      <section ref={sectionRef} className="py-28 bg-brand-light shadow-md">
+      <section ref={sectionRef} className="py-16 md:py-28 bg-brand-light shadow-md">
         <motion.div 
-          className="container"
+          className="container mx-auto px-4 md:px-16"
           initial="hidden"
           animate={isVisible ? "visible" : "hidden"}
           variants={containerVariants}
         >
           <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
             <motion.h1 
-              className="text-4xl font-bold mb-12 text-brand-dark font-varela"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 md:mb-12 text-brand-dark font-varela"
               variants={titleVariants}
             >
               לקוחות ממליצים
             </motion.h1>
             <motion.div 
-              className="relative h-48 w-full overflow-hidden"
+              className="relative min-h-[200px] sm:min-h-[180px] md:min-h-[160px] w-full overflow-hidden px-2 sm:px-0"
               variants={carouselVariants}
             >
               {testimonials.map((testimonial, index) => (
@@ -150,13 +150,13 @@ const Testimonial = () => {
                     }
                   }}
                 >
-                  <p className="text-3xl mb-8 font-varela leading-relaxed text-brand-dark">
+                  <p className="text-xl sm:text-2xl md:text-3xl mb-4 sm:mb-6 md:mb-8 font-varela leading-relaxed text-brand-dark whitespace-pre-line">
                     "{testimonial.quote}"
                   </p>
                   
                   <div className="flex flex-col items-center">
                     <div>
-                      <p className="font-semibold text-lg text-brand-dark">{testimonial.name} </p>
+                      <p className="font-semibold text-base sm:text-lg text-brand-dark">{testimonial.name} </p>
                     </div>
                   </div>
                 </motion.div>
@@ -164,13 +164,13 @@ const Testimonial = () => {
             </motion.div>
             
             <motion.div 
-              className="flex mt-8 space-x-2"
+              className="flex mt-6 md:mt-8 space-x-2 rtl:space-x-reverse"
               variants={carouselVariants}
             >
               {testimonials.map((_, index) => (
                 <motion.button
                   key={index}
-                  className={`w-3 h-3 rounded-full mx-1 ${
+                  className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full mx-1 ${
                     index === currentIndex ? 'bg-brand-dark' : 'bg-gray-300'
                   }`}
                   onClick={() => setCurrentIndex(index)}
@@ -187,4 +187,4 @@ const Testimonial = () => {
   )
 }
 
-export default Testimonial 
+export default Testimonial
