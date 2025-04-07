@@ -172,7 +172,7 @@ const Footer = () => {
                 <img src="/images/instagram-icon.svg" alt="Instagram" className="w-6 h-6" />
               </motion.a>
               <motion.a 
-                href={`https://api.whatsapp.com/send/?phone=9720549303109&text=${whatsAppText}&type=phone_number&app_absent=0`}
+                href={`https://api.whatsapp.com/send/?phone=9720543984885&text=${whatsAppText}&type=phone_number&app_absent=0`}
                 target="_blank" 
                 aria-label="Instagram"
                 whileHover="hover"
