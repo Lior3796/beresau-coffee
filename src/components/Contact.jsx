@@ -2,21 +2,92 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import.meta.env;
+import { Element } from "react-scroll";
 
 const Contact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
+  
+  // Add error states
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  // Validation functions
+  const validateName = (value) => {
+    if (!value.trim()) return "שם מלא הוא שדה חובה";
+    if (value.length < 2) return "שם חייב להכיל לפחות 2 תווים";
+    return "";
+  };
+
+  const validateEmail = (value) => {
+    if (!value.trim()) return "אימייל הוא שדה חובה";
+    // Email regex pattern
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) return "כתובת אימייל לא תקינה";
+    return "";
+  };
+
+  const validatePhone = (value) => {
+    if (!value.trim()) return "מספר טלפון הוא שדה חובה";
+    // Israeli phone number regex (supports formats like: 050-1234567, 0501234567)
+    const phoneRegex = /^0(5\d|[2-4]\d|[8-9]\d)-?\d{7}$/;
+    if (!phoneRegex.test(value)) return "מספר טלפון לא תקין";
+    return "";
+  };
+
+  const validateMessage = (value) => {
+    if (!value.trim()) return "הודעה היא שדה חובה";
+    if (value.length < 10) return "הודעה חייבת להכיל לפחות 10 תווים";
+    return "";
+  };
+
+  // Handle input changes with validation
+  const handleInputChange = (e, setter, validator) => {
+    const { name, value } = e.target;
+    setter(value);
+    
+    // Validate on change
+    const errorMessage = validator(value);
+    setErrors(prev => ({
+      ...prev,
+      [name]: errorMessage
+    }));
+  };
+  
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Validate all fields before submission
+    const nameError = validateName(name);
+    const emailError = validateEmail(email);
+    const phoneError = validatePhone(phone);
+    const messageError = validateMessage(message);
+    
+    // Update all errors
+    setErrors({
+      name: nameError,
+      email: emailError,
+      phone: phoneError,
+      message: messageError
+    });
+    
+    // Check if there are any errors
+    if (nameError || emailError || phoneError || messageError) {
+      return; // Don't submit if there are errors
+    }
+    
     // emails
     const serviceId = import.meta.env.VITE_SERVICE_ID;
     const templateId = import.meta.env.VITE_TEMPLATE_ID;
     const publicKey = import.meta.env.VITE_PUBLIC_KEY;
 
     //new object
-
     const templateParams = {
       name: name,
       email: email,
@@ -32,6 +103,13 @@ const Contact = () => {
         setPhone("");
         setEmail("");
         setMessage("");
+        // Clear errors on successful submission
+        setErrors({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
       })
       .catch((error) => {
         console.log("Error sending email", error);
@@ -139,119 +217,155 @@ const Contact = () => {
   };
 
   return (
-    <section ref={sectionRef} id="contact" className="py-28 bg-white">
-      <motion.div
-        className="container"
-        initial="hidden"
-        animate={isVisible ? "visible" : "hidden"}
-        variants={containerVariants}
-      >
-        <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
-          <motion.div className="mb-12" variants={titleVariants}>
-            <h2 className="text-5xl mb-6 font-varela leading-tight tracking-tighter text-brand-dark">
-              יצירת קשר
-            </h2>
-            <p className="text-xl text-brand-dark">
-              {" "}
-              השאירו פרטים ונחזור אליכם 📩
-            </p>
-          </motion.div>
-
-          <motion.form
-            onSubmit={handleSubmit}
-            className="w-full max-w-lg"
-            variants={formVariants}
-          >
-            <motion.div className="mb-6" variants={inputVariants}>
-              <label
-                htmlFor="name"
-                className="block text-lg text-brand-dark text-right mb-2"
-              >
-                שם מלא
-              </label>
-              <motion.input
-                value={name}
-                name="name"
-                onChange={(e) => setName(e.target.value)}
-                type="text"
-                id="name"
-                className="w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 focus:ring-brand-brown"
-                whileFocus="focus"
-                variants={inputVariants}
-              />
+    <Element name="contact">
+      <section ref={sectionRef} id="contact" className="py-28 bg-white">
+        <motion.div
+          className="container"
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          variants={containerVariants}
+        >
+          <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
+            <motion.div className="mb-12" variants={titleVariants}>
+              <h2 className="text-5xl mb-6 font-varela leading-tight tracking-tighter text-brand-dark">
+                יצירת קשר
+              </h2>
+              <p className="text-xl text-brand-dark">
+                {" "}
+                השאירו פרטים ונחזור אליכם 📩
+              </p>
             </motion.div>
 
-            <motion.div className="mb-6" variants={inputVariants}>
-              <label
-                htmlFor="phone"
-                className="block text-lg text-brand-dark text-right mb-2"
-              >
-                פלאפון
-              </label>
-              <motion.input
-                value={phone}
-                name="phone"
-                onChange={(e) => setPhone(e.target.value)}
-                type="tel"
-                id="phone"
-                className="w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 focus:ring-brand-brown"
-                whileFocus="focus"
-                variants={inputVariants}
-              />
-            </motion.div>
-
-            <motion.div className="mb-6" variants={inputVariants}>
-              <label
-                htmlFor="email"
-                className="block text-lg text-brand-dark text-right mb-2"
-              >
-                אימייל
-              </label>
-              <motion.input
-                value={email}
-                name="email"
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                id="email"
-                className="w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 focus:ring-brand-brown"
-                whileFocus="focus"
-                variants={inputVariants}
-              />
-            </motion.div>
-
-            <motion.div className="mb-6" variants={inputVariants}>
-              <label
-                htmlFor="message"
-                className="block text-lg text-brand-dark text-right mb-2"
-              >
-                הודעה
-              </label>
-              <motion.textarea
-                name="user_message"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                id="message"
-                rows="4"
-                placeholder="אני מעוניין ב.."
-                className="w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 focus:ring-brand-brown"
-                whileFocus="focus"
-                variants={inputVariants}
-              ></motion.textarea>
-            </motion.div>
-
-            <motion.button
-              type="submit"
-              className="bg-brand-brown text-white py-2.5 px-6 rounded-xl text-lg font-medium transition-colors"
-              variants={buttonVariants}
-              whileHover="hover"
-              whileTap="tap"
+            <motion.form
+              onSubmit={handleSubmit}
+              className="w-full max-w-lg"
+              variants={formVariants}
+              noValidate
             >
-              שלח
-            </motion.button>
-          </motion.form>
-        </div>
-      </motion.div>
-    </section>
+              <motion.div className="mb-6" variants={inputVariants}>
+                <label
+                  htmlFor="name"
+                  className="block text-lg text-brand-dark text-right mb-2"
+                >
+                  שם מלא *
+                </label>
+                <motion.input
+                  value={name}
+                  name="name"
+                  onChange={(e) => handleInputChange(e, setName, validateName)}
+                  type="text"
+                  id="name"
+                  required
+                  minLength="2"
+                  className={`w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
+                    errors.name ? "border-2 border-red-500 focus:ring-red-500" : "focus:ring-brand-brown"
+                  }`}
+                  whileFocus="focus"
+                  variants={inputVariants}
+                  onBlur={(e) => handleInputChange(e, setName, validateName)}
+                />
+                {errors.name && (
+                  <p className="text-right text-red-500 text-sm mt-1">{errors.name}</p>
+                )}
+              </motion.div>
+
+              <motion.div className="mb-6" variants={inputVariants}>
+                <label
+                  htmlFor="phone"
+                  className="block text-lg text-brand-dark text-right mb-2"
+                >
+                  פלאפון *
+                </label>
+                <motion.input
+                  value={phone}
+                  name="phone"
+                  onChange={(e) => handleInputChange(e, setPhone, validatePhone)}
+                  type="tel"
+                  id="phone"
+                  required
+                  pattern="^0(5\d|[2-4]\d|[8-9]\d)-?\d{7}$"
+                  className={`w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
+                    errors.phone ? "border-2 border-red-500 focus:ring-red-500" : "focus:ring-brand-brown"
+                  }`}
+                  whileFocus="focus"
+                  variants={inputVariants}
+                  onBlur={(e) => handleInputChange(e, setPhone, validatePhone)}
+                  placeholder="050-1234567"
+                />
+                {errors.phone && (
+                  <p className="text-right text-red-500 text-sm mt-1">{errors.phone}</p>
+                )}
+              </motion.div>
+
+              <motion.div className="mb-6" variants={inputVariants}>
+                <label
+                  htmlFor="email"
+                  className="block text-lg text-brand-dark text-right mb-2"
+                >
+                  אימייל *
+                </label>
+                <motion.input
+                  value={email}
+                  name="email"
+                  onChange={(e) => handleInputChange(e, setEmail, validateEmail)}
+                  type="email"
+                  id="email"
+                  required
+                  className={`w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
+                    errors.email ? "border-2 border-red-500 focus:ring-red-500" : "focus:ring-brand-brown"
+                  }`}
+                  whileFocus="focus"
+                  variants={inputVariants}
+                  onBlur={(e) => handleInputChange(e, setEmail, validateEmail)}
+                  placeholder="your@email.com"
+                />
+                {errors.email && (
+                  <p className="text-right text-red-500 text-sm mt-1">{errors.email}</p>
+                )}
+              </motion.div>
+
+              <motion.div className="mb-6" variants={inputVariants}>
+                <label
+                  htmlFor="message"
+                  className="block text-lg text-brand-dark text-right mb-2"
+                >
+                  הודעה *
+                </label>
+                <motion.textarea
+                  name="message"
+                  value={message}
+                  onChange={(e) => handleInputChange(e, setMessage, validateMessage)}
+                  id="message"
+                  rows="4"
+                  required
+                  minLength="10"
+                  placeholder="אני מעוניין ב.."
+                  className={`w-full p-3 bg-brand-dark/5 rounded-xl text-right focus:outline-none focus:ring-2 ${
+                    errors.message ? "border-2 border-red-500 focus:ring-red-500" : "focus:ring-brand-brown"
+                  }`}
+                  whileFocus="focus"
+                  variants={inputVariants}
+                  onBlur={(e) => handleInputChange(e, setMessage, validateMessage)}
+                ></motion.textarea>
+                {errors.message && (
+                  <p className="text-right text-red-500 text-sm mt-1">{errors.message}</p>
+                )}
+              </motion.div>
+
+              <motion.button
+                type="submit"
+                className="bg-brand-brown text-white py-2.5 px-6 rounded-xl text-lg font-medium transition-colors"
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                שלח
+              </motion.button>
+            </motion.form>
+          </div>
+        </motion.div>
+      </section>
+    </Element>
   );
 };
 

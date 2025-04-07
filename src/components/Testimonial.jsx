@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion } from "framer-motion";
+import { Element } from "react-scroll";
 
 const Testimonial = () => {
   const testimonials = [
@@ -114,73 +115,75 @@ const Testimonial = () => {
   };
 
   return (
-    <section ref={sectionRef} className="py-28 bg-brand-light shadow-md">
-      <motion.div 
-        className="container"
-        initial="hidden"
-        animate={isVisible ? "visible" : "hidden"}
-        variants={containerVariants}
-      >
-        <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
-          <motion.h1 
-            className="text-4xl font-bold mb-12 text-brand-dark font-varela"
-            variants={titleVariants}
-          >
-            לקוחות ממליצים
-          </motion.h1>
-          <motion.div 
-            className="relative h-48 w-full overflow-hidden"
-            variants={carouselVariants}
-          >
-            {testimonials.map((testimonial, index) => (
-              <motion.div 
-                key={index}
-                className={`absolute top-0 left-0 w-full ${
-                  index === currentIndex ? 'opacity-100' : 'opacity-0'
-                }`}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ 
-                  opacity: index === currentIndex ? 1 : 0,
-                  x: index === currentIndex ? 0 : 50,
-                  transition: {
-                    opacity: { duration: 0.5 },
-                    x: { type: "spring", stiffness: 100, damping: 15 }
-                  }
-                }}
-              >
-                <p className="text-3xl mb-8 font-varela leading-relaxed text-brand-dark">
-                  "{testimonial.quote}"
-                </p>
-                
-                <div className="flex flex-col items-center">
-                  <div>
-                    <p className="font-semibold text-lg text-brand-dark">{testimonial.name} </p>
+    <Element name="testimonial">
+      <section ref={sectionRef} className="py-28 bg-brand-light shadow-md">
+        <motion.div 
+          className="container"
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          variants={containerVariants}
+        >
+          <div className="max-w-3xl mx-auto flex flex-col items-center text-center">
+            <motion.h1 
+              className="text-4xl font-bold mb-12 text-brand-dark font-varela"
+              variants={titleVariants}
+            >
+              לקוחות ממליצים
+            </motion.h1>
+            <motion.div 
+              className="relative h-48 w-full overflow-hidden"
+              variants={carouselVariants}
+            >
+              {testimonials.map((testimonial, index) => (
+                <motion.div 
+                  key={index}
+                  className={`absolute top-0 left-0 w-full ${
+                    index === currentIndex ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  initial={{ opacity: 0, x: 50 }}
+                  animate={{ 
+                    opacity: index === currentIndex ? 1 : 0,
+                    x: index === currentIndex ? 0 : 50,
+                    transition: {
+                      opacity: { duration: 0.5 },
+                      x: { type: "spring", stiffness: 100, damping: 15 }
+                    }
+                  }}
+                >
+                  <p className="text-3xl mb-8 font-varela leading-relaxed text-brand-dark">
+                    "{testimonial.quote}"
+                  </p>
+                  
+                  <div className="flex flex-col items-center">
+                    <div>
+                      <p className="font-semibold text-lg text-brand-dark">{testimonial.name} </p>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-          
-          <motion.div 
-            className="flex mt-8 space-x-2"
-            variants={carouselVariants}
-          >
-            {testimonials.map((_, index) => (
-              <motion.button
-                key={index}
-                className={`w-3 h-3 rounded-full mx-1 ${
-                  index === currentIndex ? 'bg-brand-dark' : 'bg-gray-300'
-                }`}
-                onClick={() => setCurrentIndex(index)}
-                aria-label={`Go to testimonial ${index + 1}`}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
-              />
-            ))}
-          </motion.div>
-        </div>
-      </motion.div>
-    </section>
+                </motion.div>
+              ))}
+            </motion.div>
+            
+            <motion.div 
+              className="flex mt-8 space-x-2"
+              variants={carouselVariants}
+            >
+              {testimonials.map((_, index) => (
+                <motion.button
+                  key={index}
+                  className={`w-3 h-3 rounded-full mx-1 ${
+                    index === currentIndex ? 'bg-brand-dark' : 'bg-gray-300'
+                  }`}
+                  onClick={() => setCurrentIndex(index)}
+                  aria-label={`Go to testimonial ${index + 1}`}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                />
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
+      </section>
+    </Element>
   )
 }
 

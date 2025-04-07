@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { Element } from "react-scroll";
 
 const Story = () => {
   const sectionRef = useRef(null);
@@ -51,6 +52,7 @@ const Story = () => {
   };
 
   return (
+    <Element name="story"> 
     <section ref={sectionRef} className="py-28 bg-white">
       <motion.div
         className="container"
@@ -101,6 +103,9 @@ const Story = () => {
         </div>
       </motion.div>
     </section>
+
+    </Element>
+
   )
 }
 
