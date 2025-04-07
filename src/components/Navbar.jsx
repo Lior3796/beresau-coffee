@@ -30,7 +30,7 @@ const Navbar = () => {
               isScrolled ? 'text-coffee-800 hover:text-coffee-600' : 'text-white hover:text-coffee-200'
             }`}>
               <a href="https://beresau.co.il/?gad_source=1&gclid=Cj0KCQjw782_BhDjARIsABTv_JAE97wGb1SwevwQJPWSasXnKjq76C3qRucJpGrpFcSw4qvufUoqyLMaArXCEALw_wcB">
-                קפה ברסאו
+                ברסאו
               </a>
             </span>
           </div>
