@@ -73,14 +73,16 @@ const Hero = () => {
       >
         <div className="text-white mb-8">
           <motion.h1 
-            className="text-7xl mb-6 font-varela leading-tight tracking-tighter"
+            className="text-7xl mb-6  leading-tight tracking-tighter"
             variants={titleVariants}
+            style={{ fontFamily: '"Alef", Sans-serif' }}
           >
             ברסאו קפה אתיופי משובח
           </motion.h1>
           <motion.p 
-            className="text-xl"
+            className="text-2xl"
             variants={subtitleVariants}
+            style={{ fontFamily: '"Alef", Sans-serif', fontWeight: 500 }}
           >
             קפה איכותי המשלב מסורת, תרבות ואיכות בלתי מתפשרת
           </motion.p>
