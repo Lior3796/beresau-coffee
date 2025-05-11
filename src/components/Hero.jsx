@@ -84,7 +84,12 @@ const Hero = () => {
             variants={subtitleVariants}
             style={{ fontFamily: '"Alef", Sans-serif', fontWeight: 500 }}
           >
-            קפה איכותי המשלב מסורת, תרבות ואיכות בלתי מתפשרת
+            <span className="hidden md:inline">קפה המשלב מסורת, תרבות ואיכות בלתי מתפשרת</span>
+            <span className="md:hidden">
+              קפה המשלב מסורת, תרבות
+              <br />
+              ואיכות בלתי מתפשרת
+            </span>
           </motion.p>
         </div>
         <motion.div variants={buttonVariants}>
